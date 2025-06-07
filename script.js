@@ -50,8 +50,18 @@ function downloadCheats() {
   thanks.classList.remove("error");
   thanks.focus();
 
+  // Программное скачивание файла
+  var downloadUrl = "https://drive.google.com/uc?export=download&id=1DbJy52fOrxAo9eatqvIAFGJFtlNFCpoc";
+  var link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = "Dominatora.exe"; // Имя файла при скачивании
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // Симуляция возможной ошибки (20% шанс)
   setTimeout(() => {
-    const randomError = Math.random() < 0.2; // 20% шанс ошибки
+    const randomError = Math.random() < 0.2;
     if (randomError) {
       thanks.textContent = "Ошибка: Не удалось начать скачивание.";
       thanks.classList.add("error");
