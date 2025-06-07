@@ -1,87 +1,33 @@
-<script type="text/javascript">
-  var gk_isXlsx = false;
-  var gk_xlsxFileLookup = {};
-  var gk_fileData = {};
-
-  function filledCell(cell) {
-    return cell !== '' && cell != null;
-  }
-
-  function loadFileData(filename) {
-    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-      try {
-        var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-        var firstSheetName = workbook.SheetNames[0];
-        var worksheet = workbook.Sheets[firstSheetName];
-
-        // Convert sheet to JSON to filter blank rows
-        var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-        // Filter out blank rows (rows where all cells are empty, null, or undefined)
-        var filteredData = jsonData.filter(row => row.some(filledCell));
-
-        // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-        var headerRowIndex = filteredData.findIndex((row, index) =>
-          row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-        );
-        // Fallback
-        if (headerRowIndex === -1 || headerRowIndex > 25) {
-          headerRowIndex = 0;
-        }
-
-        // Convert filtered JSON back to CSV
-        var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-        csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-        return csv;
-      } catch (e) {
-        console.error(e);
-        return "";
-      }
-    }
-    return gk_fileData[filename] || "";
-  }
-
-  function downloadCheats() {
-    // Ссылка на файл с Google Drive
-    var downloadUrl = "https://drive.google.com/uc?export=download&id=1DbJy52fOrxAo9eatqvIAFGJFtlNFCpoc";
-    // Создаём временную ссылку для скачивания
-    var link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = "Dominatora.exe"; // Указываем имя файла для скачивания
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-</script>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="<img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-title' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-title' /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-title' /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-title' /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-title' /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-title' /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-title' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-title' /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-title' /> - лучшая коллекция модификаций для Counter-Strike 2. Wallhack, Aimbot, Skinchanger и многое другое!" />
-  <meta name="keywords" content="Counter-Strike 2, читы, wallhack, aimbot, skinchanger" />
+  <meta name="description" content="Скачай читы для Counter-Strike 2 (CS2) бесплатно — Aimbot, Wallhack и Skinchanger от Dominatora. Безопасные модификации 2025!" />
+  <meta name="keywords" content="CS2 читы, скачать читы для CS2, CS2 aimbot, CS2 wallhack, читы Counter-Strike 2 бесплатно" />
   <meta name="author" content="NeonForge Studio" />
-  <title><img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-title' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-title' /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-title' /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-title' /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-title' /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-title' /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-title' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-title' /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-title' /> - Скачать модификации</title>
+  <title>Скачать Читыв для CS2 — Dominatora | Бесплатно и Безопасно</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="d.svg" type="image/svg+xml" />
 </head>
 <body>
   <header class="navbar">
     <div class="navbar-content">
-      <a href="#" aria-label="Главная страница Dominator"><img src="d.svg" alt="Логотип D" class="navbar-logo" /></a>
+      <a href="#" aria-label="Главная страница Dominator"><img src="d.svg" alt="Логотип D" class="navbar-logo" width="50" height="50" loading="lazy" /></a>
       <div class="navbar-links">
         <a href="#download" class="nav-button" aria-label="Скачать <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' />">📥 Скачать</a>
       </div>
     </div>
   </header>
   <div class="background-overlay">
-    <img src="d.svg" alt="Водяной знак D" class="watermark" />
+    <img src="d.svg" alt="Водяной знак D" class="watermark" width="100" height="100" loading="lazy" />
   </div>
   <div class="container">
     <div class="intro-text" id="intro-text" aria-live="polite">
-      <h1 id="animated-title">Доминируй в Counter-Strike 2 с <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-h1' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h1' /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-h1' /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-h1' /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-h1' /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-h1' /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-h1' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h1' /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-h1' /></h1>
-      <p id="animated-intro"><strong><img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' /></strong> — твой ключ к превосходству в игре.</p>
+      <h1 id="animated-title">Доминируй в Counter-Strike 2 с <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-h1' width="20" height="20" loading="lazy" /></h1>
+      <p id="animated-intro"><strong><img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" /></strong> — твой ключ к превосходству в игре.</p>
       <p>Хочешь быть на шаг впереди в Counter-Strike 2? Мы предлагаем мощные модификации: <strong>Wallhack (WH)</strong> для видения врагов сквозь стены, <strong>Aimbot</strong> для точного наведения, <strong>Skinchanger</strong> для смены скинов оружия, <strong>Triggerbot</strong> для автоматической стрельбы, <strong>Bunnyhop</strong> для улучшенной мобильности. Всё бесплатно и безопасно!</p>
-      <p>Поддерживаются Windows 10 и 11 (x64 и ARM64), macOS, Linux. <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' /> не работает на Windows 7 и 8.1 (x64).</p>
+      <p>Поддерживаются Windows 10 и 11 (x64 и ARM64), macOS, Linux. <img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" /> не работает на Windows 7 и 8.1 (x64).</p>
       
       <h2>Какие бывают модификации?</h2>
       <p>Модификации делятся на три категории:</p>
@@ -95,21 +41,21 @@
       <div class="screenshots">
         <p id="animated-screenshot-text">Посмотрите, как работают наши модификации в Counter-Strike 2:</p>
         <div class="screenshot">
-          <img src="https://cs-elect.ru/_ld/23/06909363.webp" alt="Aimbot в Counter-Strike 2" />
+          <img src="https://cs-elect.ru/_ld/23/06909363.webp" alt="Aimbot в Counter-Strike 2" width="300" height="200" loading="lazy" />
           <p id="animated-aimbot-text">Aimbot: Молниеносное наведение на врагов</p>
         </div>
         <div class="screenshot">
-          <img src="https://cs-elect.ru/_ld/23/s26699154.webp" alt="Wallhack в Counter-Strike 2" />
+          <img src="https://cs-elect.ru/_ld/23/s26699154.webp" alt="Wallhack в Counter-Strike 2" width="300" height="200" loading="lazy" />
           <p id="animated-wallhack-text">Wallhack: Полный контроль над картой</p>
         </div>
       </div>
 
       <h2>Как использовать модификации?</h2>
       <ol class="instructions">
-        <li>Скачай <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' />, нажав на кнопку "Скачать" выше или ниже.</li>
+        <li>Скачай <img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" />, нажав на кнопку "Скачать" выше или ниже.</li>
         <li>Убедись, что установлена последняя версия Counter-Strike 2.</li>
         <li>Запусти Counter-Strike 2 и войди в игру (меню или матч).</li>
-        <li>Открой <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' />, выбери нужные функции (WH, Aimbot и т.д.).</li>
+        <li>Открой <img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" />, выбери нужные функции (WH, Aimbot и т.д.).</li>
         <li>Играй с преимуществом!</li>
       </ol>
 
@@ -119,28 +65,28 @@
       <h2>Безопасность и вирусы</h2>
       <p>Все модификации проверяются на вирусы независимыми экспертами. Мы отбираем только безопасные моды.</p>
 
-      <h2>Как установить <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-h2' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h2' /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-h2' /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-h2' /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-h2' /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-h2' /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-h2' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h2' /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-h2' />?</h2>
+      <h2>Как установить <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-h2' width="20" height="20" loading="lazy" />?</h2>
       <p>Скачай установщик через кнопку выше. Выбери папку, запусти установку (10–20 секунд). Войди через email или Google-аккаунт (без пароля). Выбери Counter-Strike 2, найди модификацию и нажми "Запустить".</p>
 
       <h2>Нужен ли инжектор?</h2>
-      <p>Для DLL-модификаций часто нужны инжекторы (Ghost Injector, Extreme Injector), но <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' /> запускает моды автоматически.</p>
+      <p>Для DLL-модификаций часто нужны инжекторы (Ghost Injector, Extreme Injector), но <img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" /> запускает моды автоматически.</p>
 
       <h2>Как открыть меню мода?</h2>
       <p>Клавиша для меню указана в программе. Следуй инструкциям.</p>
 
       <h2>Зачем нужны модификации?</h2>
-      <p>Не все готовы часами тренироваться. Игры полны читеров, и иногда хочется расслабиться или поднять ранг. Мы не призываем использовать моды — это твой выбор. <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' /> даёт новый игровой опыт.</p>
+      <p>Не все готовы часами тренироваться. Игры полны читеров, и иногда хочется расслабиться или поднять ранг. Мы не призываем использовать моды — это твой выбор. <img src='d.svg' alt='Логотип D' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo' width="15" height="15" loading="lazy" /> даёт новый игровой опыт.</p>
     </div>
     <h2 id="title" aria-live="polite"></h2>
     <p class="description" id="description" aria-live="polite"></p>
-    <button type="button" aria-label="Скачать <img src='d.svg' alt='Логотип D' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='m.svg' alt='Логотип m' class='inline-logo' /><img src='i.svg' alt='Логотип i' class='inline-logo' /><img src='n.svg' alt='Логотип n' class='inline-logo' /><img src='a.svg' alt='Логотип a' class='inline-logo' /><img src='t.svg' alt='Логотип t' class='inline-logo' /><img src='o.svg' alt='Логотип o' class='inline-logo' /><img src='r.svg' alt='Логотип r' class='inline-logo' />" onclick="downloadCheats()" id="download">
+    <button type="button" aria-label="Скачать <img src='d.svg' alt='Логотип D' class='inline-logo' width='15' height='15' loading='lazy' /><img src='o.svg' alt='Логотип o' class='inline-logo' width='15' height='15' loading='lazy' /><img src='m.svg' alt='Логотип m' class='inline-logo' width='15' height='15' loading='lazy' /><img src='i.svg' alt='Логотип i' class='inline-logo' width='15' height='15' loading='lazy' /><img src='n.svg' alt='Логотип n' class='inline-logo' width='15' height='15' loading='lazy' /><img src='a.svg' alt='Логотип a' class='inline-logo' width='15' height='15' loading='lazy' /><img src='t.svg' alt='Логотип t' class='inline-logo' width='15' height='15' loading='lazy' /><img src='o.svg' alt='Логотип o' class='inline-logo' width='15' height='15' loading='lazy' /><img src='r.svg' alt='Логотип r' class='inline-logo' width='15' height='15' loading='lazy' />" onclick="downloadCheats()" id="download">
       <span class="button-text">📥 Скачать модификации</span>
     </button>
     <p id="thanks-message" aria-live="assertive"></p>
   </div>
   <footer>
-    <img src="d.svg" alt="Логотип D" class="footer-logo" />
-    <p>2018-2025 © <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-footer' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-footer' /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-footer' /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-footer' /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-footer' /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-footer' /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-footer' /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-footer' /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-footer' />. Все права защищены. Разработано NeonForge Studio.</p>
+    <img src="d.svg" alt="Логотип D" class="footer-logo" width="50" height="50" loading="lazy" />
+    <p>2018-2025 © <img src='d.svg' alt='Логотип D' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='m.svg' alt='Логотип m' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='i.svg' alt='Логотип i' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='n.svg' alt='Логотип n' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='a.svg' alt='Логотип a' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='t.svg' alt='Логотип t' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='o.svg' alt='Логотип o' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" /><img src='r.svg' alt='Логотип r' class='inline-logo inline-logo-footer' width="15" height="15" loading="lazy" />. Все права защищены. Разработано NeonForge Studio.</p>
   </footer>
   <script src="script.js"></script>
 </body>
